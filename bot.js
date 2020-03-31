@@ -6,7 +6,7 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.content === 'dog') {
+  if (msg.content === '!dog') {
     msg.reply('*Woof!*');
   }
 });
