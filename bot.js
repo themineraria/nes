@@ -6,7 +6,7 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.content === '@nes :dog:') {
+  if (msg.content === '@nes dog') {
     msg.reply('*Woof!*');
   }
 });
