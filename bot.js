@@ -6,8 +6,20 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
+  if(msg.author.bot) return;
   if (msg.content === '!dog') {
     msg.reply('*Woof!*');
   }
+  
+  if(msg.content.startsWith("!nessay")) {
+    // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
+    // To get the "message" itself we join the `args` back into a string with spaces: 
+    const sayMessage = msg.content.split(" ");
+    // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
+    msg.delete().catch(O_o=>{}); 
+    // And we get the bot to say the thing: 
+    msg.channel.send(sayMessage[1]);
+  }
+  
 });
 client.login('Njk0Njc4NTYzNDYyMzE2MDky.XoPILw.rcQ6SP_30O3JvZ7Hu2zhaHrsDvM');
