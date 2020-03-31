@@ -10,4 +10,4 @@ client.on('message', msg => {
     msg.reply('Pong!');
   }
 });
-client.login('SY8-xRDVxNEB3WOg9f-noFKYRVkwY9du');
+client.login('Njk0Njc4NTYzNDYyMzE2MDky.XoPILw.rcQ6SP_30O3JvZ7Hu2zhaHrsDvM');
