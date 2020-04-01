@@ -27,7 +27,7 @@ client.on('message', msg => {
   if(msg.content.startsWith("!nessay")) {
     // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
     // To get the "message" itself we join the `args` back into a string with spaces: 
-    if(msg.member.roles == null || !msg.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)))
+    if(msg.member == null || !msg.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)))
       return msg.reply("WOOF :angry: !");
     const sayMessage = msg.content.split(" ");
     sayMessage.splice(0, 1);
