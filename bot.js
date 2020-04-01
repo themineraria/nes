@@ -27,6 +27,8 @@ client.on('message', msg => {
   if(msg.content.startsWith("!nessay")) {
     // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
     // To get the "message" itself we join the `args` back into a string with spaces: 
+    if(!msg.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)) )
+      return message.reply("WOOF :angry: !");
     const sayMessage = msg.content.split(" ");
     sayMessage.splice(0, 1);
     // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
