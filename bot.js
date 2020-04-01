@@ -20,7 +20,7 @@ client.on('ready', () => {
 
 client.on('message', msg => {
   if(msg.author.bot) return;
-  if (msg.content === '!dog' || msg.content.includes(":dog:")) {
+  if (msg.content === '!dog' || msg.content.includes("🐶")) {
     msg.reply('*Woof!*');
   }
   
