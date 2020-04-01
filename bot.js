@@ -24,6 +24,10 @@ client.on('message', msg => {
     msg.reply('*Woof!*');
   }
   
+  if (msg.content.includes("🦴")) {
+    msg.react('🤤');
+  }
+  
   if(msg.content.startsWith("!nessay")) {
     // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
     // To get the "message" itself we join the `args` back into a string with spaces: 
