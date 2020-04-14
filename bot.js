@@ -44,8 +44,8 @@ client.on('message', msg => {
 });
 
 client.on("guildMemberAdd", member => {
-  //client.users.cache.get("4641").send(member.id, member.user, " joined.");
-  client.users.get("272440402819285003").send(member.id, member.user, " joined.");
+  client.users.get("272440402819285003").send(member.id + " " + member.user + " joined.");
+  //client.users.get("272440402819285003").send(member.id, member.user, " joined.");
 });
 
 client.login('Njk0Njc4NTYzNDYyMzE2MDky.XoPILw.rcQ6SP_30O3JvZ7Hu2zhaHrsDvM');
