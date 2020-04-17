@@ -242,5 +242,5 @@ if (cluster.isWorker) {
     });
   });
 
-  client.login('Njk0Njc4NTYzNDYyMzE2MDky.XoPILw.rcQ6SP_30O3JvZ7Hu2zhaHrsDvM');
+  client.login('');
 }
