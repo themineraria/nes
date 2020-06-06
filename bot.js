@@ -83,8 +83,9 @@ if (cluster.isWorker) {
       return msg.react('🤤');
     }
 
-    if (msg.content === "AAZZEEZZAA") {
-      msg.author.send('*Woof!*');
+    if (msg.content === "HYSAHEBBP") {
+      msg.author.send('Bravo, c\'est gagné !!');
+      client.channels.get("711664200556085259").send(msg.author.username + "#" + msg.author.discriminator + " " + datetime.toISOString());
       return;
     }
 
