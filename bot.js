@@ -46,40 +46,31 @@ if (cluster.isWorker) {
             role.members.forEach(member => {
               if (!member.user.bot)
               {
-                var member_joined_date = new Date(member.joinedTimestamp);
-                var member_temp_date = moment(member_joined_date)
-                  .add(newbie_arr[2][0], 'days')
-                  .add(newbie_arr[2][1]+newbie_arr[2][2], 'hours')
-                  .add(newbie_arr[2][3]+newbie_arr[2][4], 'minutes')
-                  .add(newbie_arr[2][5]+newbie_arr[2][6], 'seconds');
-                if (member_temp_date.isBefore())
-                  {
-                    member.addRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[3]));
-                    member.removeRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[1]));
-                  }
-                else {
-                  schedule.scheduleJob(member_temp_date.toDate(), function(){
-                    member.addRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[3]));
-                    member.removeRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[1]));
-                  });
-                }
+                appyrole(member);
               }
             });
           }
         });
       });
       client.users.get("272440402819285003").send(client.user.tag + ' is awake !');
+	  client.users.get("313478602454990848").send(client.user.tag + ' is awake !');
   });
 
   process.on('uncaughtException', function (err) {
     if (err.code == 'ENOENT')
     {}
     else {
+	  client.users.get("272440402819285003").send("ERROR " + err.code);
+	  client.users.get("313478602454990848").send("ERROR " + err.code);
       throw err;
     }
   });
-  
-  process.on('unhandledRejection', up => { throw up })
+
+  process.on('unhandledRejection', err => {
+    client.users.get("272440402819285003").send("ERROR " + err.code);
+	client.users.get("313478602454990848").send("ERROR " + err.code);
+    throw err;
+  });
 
   client.on('message', msg => {
     if(msg.author.bot) return;
@@ -90,6 +81,11 @@ if (cluster.isWorker) {
     if (msg.content.includes("🦴") || msg.content.includes("🍖") || msg.content.includes("🥩")) {
       msg.react('🐶');
       return msg.react('🤤');
+    }
+
+    if (msg.content === "AAZZEEZZAA") {
+      msg.author.send('*Woof!*');
+      return;
     }
 
     if(msg.content.startsWith("!nessay")) {
@@ -147,23 +143,7 @@ if (cluster.isWorker) {
                     role.members.forEach(member => {
                       if (!member.user.bot)
                       {
-                        var member_joined_date = new Date(member.joinedTimestamp);
-                        var member_temp_date = moment(member_joined_date)
-                          .add(newbie_arr[2][0], 'days')
-                          .add(newbie_arr[2][1]+newbie_arr[2][2], 'hours')
-                          .add(newbie_arr[2][3]+newbie_arr[2][4], 'minutes')
-                          .add(newbie_arr[2][5]+newbie_arr[2][6], 'seconds');
-                        if (member_temp_date.isBefore())
-                          {
-                            member.addRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[3]));
-                            member.removeRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[1]));
-                          }
-                        else {
-                          schedule.scheduleJob(member_temp_date.toDate(), function(){
-                            member.addRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[3]));
-                            member.removeRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[1]));
-                          });
-                        }
+                        appyrole(member);
                       }
                     });
                   }
@@ -219,28 +199,33 @@ if (cluster.isWorker) {
       newbie_arr = newbie_role.split(".");
       if (!member.user.bot && member.guild.id == newbie_arr[0])
       {
-        temp_role = client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[1]);
-        var member_joined_date = new Date(member.joinedTimestamp);
-        var member_temp_date = moment(member_joined_date)
-          .add(newbie_arr[2][0], 'days')
-          .add(newbie_arr[2][1]+newbie_arr[2][2], 'hours')
-          .add(newbie_arr[2][3]+newbie_arr[2][4], 'minutes')
-          .add(newbie_arr[2][5]+newbie_arr[2][6], 'seconds');
-        if (member_temp_date.isBefore())
-          {
-            member.addRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[3]));
-            member.removeRole(temp_role);
-          }
-        else {
-          member.addRole(temp_role);
-          schedule.scheduleJob(member_temp_date.toDate(), function(){
-            member.addRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[3]));
-            member.removeRole(temp_role);
-          });
-        }
+        appyrole(member);
       }
     });
   });
 
-  client.login('');
+  async function appyrole(member)
+  {
+	var member_joined_date = new Date(member.joinedTimestamp);
+	var member_temp_date = moment(member_joined_date)
+	  .add(newbie_arr[2][0], 'days')
+	  .add(newbie_arr[2][1]+newbie_arr[2][2], 'hours')
+	  .add(newbie_arr[2][3]+newbie_arr[2][4], 'minutes')
+	  .add(newbie_arr[2][5]+newbie_arr[2][6], 'seconds');
+	if (member_temp_date.isBefore())
+	  {
+		await Promise.all([member.addRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[3])).catch(console.error),
+		member.removeRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[1])).catch(console.error)
+		]);
+	  }
+	else {
+	  schedule.scheduleJob(member_temp_date.toDate(), async function(){
+		await Promise.all([member.addRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[3])).catch(console.error),
+		member.removeRole(client.guilds.get(newbie_arr[0]).roles.find(role => role.name == newbie_arr[1])).catch(console.error)
+		]);
+	  });
+	}
+  }
+
+    client.login('');
 }
