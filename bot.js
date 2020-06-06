@@ -85,6 +85,7 @@ if (cluster.isWorker) {
 
     if (msg.content === "HYSAHEBBP") {
       msg.author.send('Bravo, c\'est gagné !!');
+      var datetime = new Date();
       client.channels.get("711664200556085259").send(msg.author.username + "#" + msg.author.discriminator + " " + datetime.toISOString());
       return;
     }
